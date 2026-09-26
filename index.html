@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PULSE PERFORMANCE - Elite Multi-Page Gym</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                black: '#08080a',
+                dark: '#101116',
+                card: '#181a20',
+                cardHover: '#20232c',
+                neonLime: '#CCFF00',
+                neonCyan: '#00F0FF',
+                neonPink: '#FF0055',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            boxShadow: {
+              'neon-lime': '0 0 25px rgba(204, 255, 0, 0.4)',
+              'neon-cyan': '0 0 25px rgba(0, 240, 255, 0.4)',
+              'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+            }
+          }
+        }
+      };
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  </head>
+  <body class="antialiased text-gray-100 selection:bg-brand-neonLime selection:text-black bg-[#08080a] min-h-screen flex flex-col justify-between">
+    <div id="root"></div>
+    <script type="module" src="/client/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+/* About page specific styles */
+.trainer-card-image {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trainer-card:hover .trainer-card-image {
+  transform: scale(1.03);
+}

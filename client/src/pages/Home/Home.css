@@ -1,0 +1,9 @@
+/* Home page styling */
+.hero-glow-effect {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(204, 255, 0, 0.15) 0%, rgba(0, 240, 255, 0.05) 50%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+}

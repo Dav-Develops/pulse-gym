@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PULSE PERFORMANCE - Elite Multi-Page Gym</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#08080a',
+                            dark: '#101116',
+                            card: '#181a20',
+                            cardHover: '#20232c',
+                            neonLime: '#CCFF00',
+                            neonCyan: '#00F0FF',
+                            neonPink: '#FF0055',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon-lime': '0 0 25px rgba(204, 255, 0, 0.4)',
+                        'neon-cyan': '0 0 25px rgba(0, 240, 255, 0.4)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #08080a;
+            color: #f3f4f6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .glass-nav {
+            background: rgba(16, 17, 22, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(24, 26, 32, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(204, 255, 0, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px -10px rgba(204, 255, 0, 0.2);
+        }
+        .text-gradient-lime {
+            background: linear-gradient(135deg, #CCFF00 0%, #00F0FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-link.active {
+            color: #CCFF00;
+            border-bottom: 2px solid #CCFF00;
+        }
+        .page-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .page-view.active-page {
+            display: block;
+            opacity: 1;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #181a20;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #CCFF00;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-100 selection:bg-brand-neonLime selection:text-black flex flex-col justify-between">
+
+    <!-- Sticky Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#home" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-brand-neonLime flex items-center justify-center text-black font-black text-2xl tracking-tighter transform group-hover:rotate-6 transition-transform shadow-neon-lime">
+                    P
+                </div>
+                <span class="text-2xl font-black tracking-wider uppercase text-white">
+                    PULSE<span class="text-brand-neonLime">.</span>
+                </span>
+            </a>
+
+            <!-- Desktop Multi-Page Nav Tabs -->
+            <nav class="hidden md:flex items-center space-x-6 text-xs font-extrabold uppercase tracking-widest">
+                <a href="#home" class="nav-link text-gray-300 hover:text-brand-neonLime py-2 transition-colors active" data-page="home">Home</a>
+                <a href="#about" class="nav-link text-gray-300 hover:text-brand-neonLime py-2 transition-colors" data-page="about">About Us</a>
+                <a href="#classes" class="nav-link text-gray-300 hover:text-brand-neonLime py-2 transition-colors" data-page="classes">Classes</a>
+                <a href="#schedule" class="nav-link text-gray-300 hover:text-brand-neonLime py-2 transition-colors" data-page="schedule">Schedule</a>
+                <a href="#membership" class="nav-link text-gray-300 hover:text-brand-neonLime py-2 transition-colors" data-page="membership">Membership</a>
+                <a href="#contact" class="nav-link text-gray-300 hover:text-brand-neonLime py-2 transition-colors" data-page="contact">Contact</a>
+            </nav>
+
+            <!-- CTA Call to action -->
+            <div class="hidden sm:flex items-center gap-4">
+                <a href="#contact" class="px-5 py-2.5 rounded-full font-bold text-xs tracking-wider uppercase bg-brand-neonLime text-black hover:bg-white hover:shadow-neon-lime transition-all transform hover:-translate-y-0.5">
+                    Free 7-Day Pass
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-b border-white/10 px-6 py-6 space-y-4">
+            <a href="#home" class="mobile-nav-link block text-gray-300 hover:text-brand-neonLime font-extrabold uppercase tracking-wider text-sm">Home</a>
+            <a href="#about" class="mobile-nav-link block text-gray-300 hover:text-brand-neonLime font-extrabold uppercase tracking-wider text-sm">About Us</a>
+            <a href="#classes" class="mobile-nav-link block text-gray-300 hover:text-brand-neonLime font-extrabold uppercase tracking-wider text-sm">Classes</a>
+            <a href="#schedule" class="mobile-nav-link block text-gray-300 hover:text-brand-neonLime font-extrabold uppercase tracking-wider text-sm">Schedule</a>
+            <a href="#membership" class="mobile-nav-link block text-gray-300 hover:text-brand-neonLime font-extrabold uppercase tracking-wider text-sm">Membership</a>
+            <a href="#contact" class="mobile-nav-link block text-gray-300 hover:text-brand-neonLime font-extrabold uppercase tracking-wider text-sm">Contact & Trial</a>
+            <a href="#contact" class="block w-full text-center px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider bg-brand-neonLime text-black">
+                Claim Free 7-Day Pass
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container For Page Views -->
+    <main class="flex-grow pt-20">
+
+        <!-- ==================== PAGE 1: HOME PAGE ==================== -->
+        <section id="page-home" class="page-view active-page">
+            <!-- Hero -->
+            <div class="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20">
+                <!-- Background Video Placeholder Overlay -->
+                <div class="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1920&auto=format&fit=crop" class="w-full h-full object-cover filter brightness-[0.35]" alt="Gym Training Hero">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/40 to-brand-black/80"></div>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-brand-neonLime/40 text-brand-neonLime text-xs font-bold uppercase tracking-widest">
+                        <span class="w-2 h-2 rounded-full bg-brand-neonLime animate-ping"></span>
+                        Next-Gen Fitness Architecture
+                    </div>
+                    
+                    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight leading-none">
+                        REDEFINE YOUR <br>
+                        <span class="text-gradient-lime">HUMAN LIMITS.</span>
+                    </h1>
+
+                    <p class="text-gray-300 text-lg sm:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
+                        Bio-hacking equipment, Olympic-level conditioning coaches, and hyper-energetic group atmospheres engineered to transform your body.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                        <a href="#contact" class="px-8 py-4 rounded-xl bg-brand-neonLime text-black font-extrabold uppercase tracking-wider hover:bg-white hover:shadow-neon-lime transition-all">
+                            Claim 7-Day Free Pass <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#classes" class="px-8 py-4 rounded-xl glass-card text-white font-extrabold uppercase tracking-wider hover:border-brand-neonLime/50 transition-all">
+                            Explore All Classes
+                        </a>
+                    </div>
+
+                    <!-- Hero Stats Bar -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16 border-t border-white/10 max-w-4xl mx-auto">
+                        <div class="glass-card p-4 rounded-2xl">
+                            <div class="text-3xl font-black text-white">40,000</div>
+                            <div class="text-xs text-brand-neonLime font-bold uppercase mt-1">Sq. Ft. Facility</div>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl">
+                            <div class="text-3xl font-black text-brand-neonCyan">35+</div>
+                            <div class="text-xs text-gray-400 font-bold uppercase mt-1">Master Trainers</div>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl">
+                            <div class="text-3xl font-black text-white">60+</div>
+                            <div class="text-xs text-brand-neonLime font-bold uppercase mt-1">Weekly Classes</div>
+                        </div>
+                        <div class="glass-card p-4 rounded-2xl">
+                            <div class="text-3xl font-black text-brand-neonCyan">99.8%</div>
+                            <div class="text-xs text-gray-400 font-bold uppercase mt-1">Goal Success</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Preview Highlights -->
+            <div class="py-20 bg-brand-dark/50 border-t border-white/5">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-xs font-black uppercase text-brand-neonLime tracking-widest">Why Pulse Gym</span>
+                        <h2 class="text-4xl font-black uppercase tracking-tight text-white mt-1">BUILT FOR ATHLETIC SUPREMACY</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="glass-card p-8 rounded-3xl space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-neonLime/10 text-brand-neonLime flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Hyper-Intensity Zones</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Dedicated arenas engineered for maximum caloric burn and cardiovascular output using live biometric tracking.</p>
+                            <a href="#about" class="inline-block text-xs font-bold uppercase text-brand-neonLime hover:underline">Learn About Facility &rarr;</a>
+                        </div>
+
+                        <div class="glass-card p-8 rounded-3xl space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-neonCyan/10 text-brand-neonCyan flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-dumbbell"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Custom Barbell & Rig Deck</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Full Eleiko weightlifting platforms, calibrated competition plates, and power cages for true strength athletes.</p>
+                            <a href="#classes" class="inline-block text-xs font-bold uppercase text-brand-neonCyan hover:underline">View Strength Program &rarr;</a>
+                        </div>
+
+                        <div class="glass-card p-8 rounded-3xl space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-brand-neonLime/10 text-brand-neonLime flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-snowflake"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Bio-Recovery Spa</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Contrast cold plunge tanks, infrared saunas, red-light therapy, and compression boots for rapid muscle recovery.</p>
+                            <a href="#membership" class="inline-block text-xs font-bold uppercase text-brand-neonLime hover:underline">See VIP Benefits &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE 2: ABOUT US PAGE ==================== -->
+        <section id="page-about" class="page-view py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+                <!-- Header Banner -->
+                <div class="text-center max-w-3xl mx-auto space-y-4">
+                    <span class="text-xs font-black uppercase text-brand-neonLime tracking-widest">Our Legacy & Mission</span>
+                    <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white">THE PULSE PHILOSOPHY</h1>
+                    <p class="text-gray-400 text-lg">We stripped away unnecessary gym fluff and focused on pure performance engineering, elite coaching, and undeniable results.</p>
+                </div>
+
+                <!-- Brand Story Grid -->
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="relative rounded-3xl overflow-hidden glass-card p-2">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop" class="w-full h-[450px] object-cover rounded-2xl" alt="Gym Floor">
+                    </div>
+                    <div class="space-y-6">
+                        <h2 class="text-3xl font-black uppercase text-white">WHERE ATHLETES ARE FORGED</h2>
+                        <p class="text-gray-300 leading-relaxed text-sm">
+                            Founded in 2020, PULSE PERFORMANCE was built on a simple premise: everyday individuals deserve access to the same training protocols, recovery technology, and elite coaching used by professional sports teams.
+                        </p>
+                        <p class="text-gray-300 leading-relaxed text-sm">
+                            Our 40,000 sq ft state-of-the-art facility integrates high-velocity strength arenas, specialized combat sports rings, cardio matrix decks, and a world-class recovery spa.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div class="border-l-2 border-brand-neonLime pl-4">
+                                <h4 class="font-bold text-white uppercase text-sm">Scientific Training</h4>
+                                <p class="text-xs text-gray-400">Data-backed progressive overload programming.</p>
+                            </div>
+                            <div class="border-l-2 border-brand-neonCyan pl-4">
+                                <h4 class="font-bold text-white uppercase text-sm">Unmatched Culture</h4>
+                                <p class="text-xs text-gray-400">A community that pushes you beyond average.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainers Team Section -->
+                <div>
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-xs font-black uppercase text-brand-neonCyan tracking-widest">Master Instructors</span>
+                        <h2 class="text-4xl font-black uppercase tracking-tight text-white mt-1">MEET YOUR COACHES</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-4 gap-6">
+                        <!-- Trainer 1 -->
+                        <div class="glass-card rounded-2xl overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" class="w-full h-72 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" alt="Trainer Marcus">
+                            <div class="p-5">
+                                <h4 class="text-xl font-bold text-white">Marcus Vance</h4>
+                                <span class="text-xs text-brand-neonLime font-bold uppercase">Head of Conditioning</span>
+                                <p class="text-xs text-gray-400 mt-2">Ex-Olympic S&C Coach specializing in high-output metabolic conditioning.</p>
+                                <button onclick="openTrainerModal('Marcus Vance', 'Head of Conditioning', 'Ex-Olympic Strength & Conditioning Coach with over 12 years of experience developing high-output metabolic routines and professional athlete speed protocols.')" class="mt-4 w-full py-2 rounded-lg bg-white/5 hover:bg-brand-neonLime hover:text-black font-bold text-xs uppercase transition-all">
+                                    View Full Bio
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Trainer 2 -->
+                        <div class="glass-card rounded-2xl overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" class="w-full h-72 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" alt="Trainer Jaxson">
+                            <div class="p-5">
+                                <h4 class="text-xl font-bold text-white">Jaxson Hayes</h4>
+                                <span class="text-xs text-brand-neonCyan font-bold uppercase">Power & Hypertrophy</span>
+                                <p class="text-xs text-gray-400 mt-2">Powerlifting champion focused on biomechanics and safe PR progression.</p>
+                                <button onclick="openTrainerModal('Jaxson Hayes', 'Power & Hypertrophy', 'Competitive powerlifter with a 750lb deadlift record. Certified CSCS expert specializing in structural alignment and muscle hypertrophy.')" class="mt-4 w-full py-2 rounded-lg bg-white/5 hover:bg-brand-neonCyan hover:text-black font-bold text-xs uppercase transition-all">
+                                    View Full Bio
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Trainer 3 -->
+                        <div class="glass-card rounded-2xl overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop" class="w-full h-72 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" alt="Trainer Elena">
+                            <div class="p-5">
+                                <h4 class="text-xl font-bold text-white">Elena Rostova</h4>
+                                <span class="text-xs text-red-400 font-bold uppercase">Combat & Striking</span>
+                                <p class="text-xs text-gray-400 mt-2">Professional Muay Thai fighter bringing ring agility and core power.</p>
+                                <button onclick="openTrainerModal('Elena Rostova', 'Combat & Striking', '15-0 professional kickboxing veteran. Master of heavy bag technique, footwork balance, and high-intensity striker conditioning.')" class="mt-4 w-full py-2 rounded-lg bg-white/5 hover:bg-red-400 hover:text-black font-bold text-xs uppercase transition-all">
+                                    View Full Bio
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Trainer 4 -->
+                        <div class="glass-card rounded-2xl overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop" class="w-full h-72 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" alt="Trainer Aria">
+                            <div class="p-5">
+                                <h4 class="text-xl font-bold text-white">Aria Chen</h4>
+                                <span class="text-xs text-purple-400 font-bold uppercase">Mobility & Yoga</span>
+                                <p class="text-xs text-gray-400 mt-2">Kinetic movement specialist dedicated to joint longevity and injury prevention.</p>
+                                <button onclick="openTrainerModal('Aria Chen', 'Mobility & Yoga', 'Specialist in functional kinetic movement and decompression. Helps heavy weightlifters and endurance runners unlock deep joint mobility.')" class="mt-4 w-full py-2 rounded-lg bg-white/5 hover:bg-purple-400 hover:text-black font-bold text-xs uppercase transition-all">
+                                    View Full Bio
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE 3: CLASSES CATALOG PAGE ==================== -->
+        <section id="page-classes" class="page-view py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <!-- Title Header -->
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-xs font-black uppercase text-brand-neonLime tracking-widest">Training Programs</span>
+                    <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white">EXPLORE OUR CLASSES</h1>
+                    <p class="text-gray-400 text-base">Filter by intensity or workout style to find the perfect session for your goals.</p>
+                </div>
+
+                <!-- Intensity Filter Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <button onclick="filterClassesCatalog('all')" class="class-cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-neonLime text-black transition-all">All Programs</button>
+                    <button onclick="filterClassesCatalog('high')" class="class-cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">High Intensity (HIIT)</button>
+                    <button onclick="filterClassesCatalog('strength')" class="class-cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Heavy Strength</button>
+                    <button onclick="filterClassesCatalog('combat')" class="class-cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Combat & Boxing</button>
+                    <button onclick="filterClassesCatalog('mind')" class="class-cat-btn px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Mind & Mobility</button>
+                </div>
+
+                <!-- Classes Grid Catalog -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="classes-catalog-grid">
+                    <!-- Class Card 1 -->
+                    <div class="catalog-card glass-card rounded-3xl overflow-hidden flex flex-col justify-between" data-type="high">
+                        <div>
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="HIIT Class">
+                                <span class="absolute top-4 right-4 bg-brand-neonLime text-black text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">High Intensity</span>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-2xl font-bold text-white">Pulse Metabolic Ignition</h3>
+                                <p class="text-gray-400 text-xs leading-relaxed">Full-body anaerobic interval training utilizing ski-ergs, assault bikes, kettlebells, and bodyweight sprints.</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 text-xs border-t border-white/10 pt-4 text-gray-300">
+                                    <div><i class="fa-solid fa-fire text-brand-neonLime mr-1"></i> 800-1000 Cal Burn</div>
+                                    <div><i class="fa-solid fa-stopwatch text-brand-neonCyan mr-1"></i> 50 Mins Duration</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <a href="#schedule" class="block w-full text-center py-3 rounded-xl bg-white/10 hover:bg-brand-neonLime hover:text-black font-extrabold text-xs uppercase tracking-wider transition-all">
+                                View In Schedule
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Class Card 2 -->
+                    <div class="catalog-card glass-card rounded-3xl overflow-hidden flex flex-col justify-between" data-type="strength">
+                        <div>
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Strength Class">
+                                <span class="absolute top-4 right-4 bg-brand-neonCyan text-black text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Heavy Strength</span>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-2xl font-bold text-white">Compound Barbell Lab</h3>
+                                <p class="text-gray-400 text-xs leading-relaxed">Structured powerlifting techniques covering squats, bench press, deadlifts, and military presses under elite coaching.</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 text-xs border-t border-white/10 pt-4 text-gray-300">
+                                    <div><i class="fa-solid fa-fire text-brand-neonLime mr-1"></i> 500-700 Cal Burn</div>
+                                    <div><i class="fa-solid fa-stopwatch text-brand-neonCyan mr-1"></i> 75 Mins Duration</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <a href="#schedule" class="block w-full text-center py-3 rounded-xl bg-white/10 hover:bg-brand-neonCyan hover:text-black font-extrabold text-xs uppercase tracking-wider transition-all">
+                                View In Schedule
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Class Card 3 -->
+                    <div class="catalog-card glass-card rounded-3xl overflow-hidden flex flex-col justify-between" data-type="combat">
+                        <div>
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Boxing Class">
+                                <span class="absolute top-4 right-4 bg-red-500 text-black text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Combat</span>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-2xl font-bold text-white">Heavy Bag Strike Syndicate</h3>
+                                <p class="text-gray-400 text-xs leading-relaxed">Combinations, footwork, mitt work, and heavy bag conditioning designed to sculpt upper body power and agility.</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 text-xs border-t border-white/10 pt-4 text-gray-300">
+                                    <div><i class="fa-solid fa-fire text-brand-neonLime mr-1"></i> 750-950 Cal Burn</div>
+                                    <div><i class="fa-solid fa-stopwatch text-brand-neonCyan mr-1"></i> 60 Mins Duration</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <a href="#schedule" class="block w-full text-center py-3 rounded-xl bg-white/10 hover:bg-red-500 hover:text-black font-extrabold text-xs uppercase tracking-wider transition-all">
+                                View In Schedule
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Class Card 4 -->
+                    <div class="catalog-card glass-card rounded-3xl overflow-hidden flex flex-col justify-between" data-type="mind">
+                        <div>
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=800&auto=format&fit=crop" class="w-full h-full object-cover" alt="Yoga Class">
+                                <span class="absolute top-4 right-4 bg-purple-500 text-black text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Mind & Body</span>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-2xl font-bold text-white">Kinetic Flow & Recovery</h3>
+                                <p class="text-gray-400 text-xs leading-relaxed">Dynamic stretching, joint mobility work, core stabilization, and breathwork to fast-track athletic recovery.</p>
+                                
+                                <div class="grid grid-cols-2 gap-2 text-xs border-t border-white/10 pt-4 text-gray-300">
+                                    <div><i class="fa-solid fa-fire text-brand-neonLime mr-1"></i> 300-400 Cal Burn</div>
+                                    <div><i class="fa-solid fa-stopwatch text-brand-neonCyan mr-1"></i> 60 Mins Duration</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <a href="#schedule" class="block w-full text-center py-3 rounded-xl bg-white/10 hover:bg-purple-500 hover:text-black font-extrabold text-xs uppercase tracking-wider transition-all">
+                                View In Schedule
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Embedded BMI & Calorie Calculator Widget -->
+                <div class="mt-20 glass-card p-8 sm:p-12 rounded-3xl border border-white/10">
+                    <div class="grid lg:grid-cols-2 gap-10 items-center">
+                        <div>
+                            <span class="text-xs font-black uppercase text-brand-neonLime tracking-widest">Interactive Health Metric</span>
+                            <h2 class="text-3xl font-black uppercase text-white mt-1 mb-4">BMI & CALORIC ESTIMATOR</h2>
+                            <p class="text-gray-400 text-xs leading-relaxed mb-6">Enter your details to calculate body mass index and estimated daily caloric expenditure for your target weight goals.</p>
+
+                            <form id="calc-form" onsubmit="event.preventDefault(); computeMetrics();" class="space-y-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1">Height (cm)</label>
+                                        <input type="number" id="calc-height" required min="120" max="230" placeholder="180" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-bold">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold uppercase text-gray-400 mb-1">Weight (kg)</label>
+                                        <input type="number" id="calc-weight" required min="40" max="200" placeholder="78" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-bold">
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full py-3 rounded-xl bg-brand-neonLime text-black font-extrabold uppercase text-xs tracking-wider hover:bg-white transition-all">
+                                    Compute My Metrics <i class="fa-solid fa-calculator ml-2"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Results display box -->
+                        <div id="calc-output" class="bg-black/50 p-6 rounded-2xl border border-white/10 space-y-4">
+                            <div class="text-center py-6 text-gray-500 text-xs font-bold uppercase tracking-wider" id="calc-placeholder">
+                                Submit form to see your score & targets
+                            </div>
+                            <div id="calc-results" class="hidden space-y-4">
+                                <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                                    <span class="text-xs font-bold text-gray-400 uppercase">BMI Score</span>
+                                    <span id="out-bmi" class="text-3xl font-black text-brand-neonLime">24.1</span>
+                                </div>
+                                <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                                    <span class="text-xs font-bold text-gray-400 uppercase">Status Category</span>
+                                    <span id="out-cat" class="text-sm font-bold text-white">Normal Weight</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-bold text-gray-400 uppercase">Estimated Maintenance Cals</span>
+                                    <span id="out-cals" class="text-lg font-bold text-brand-neonCyan">2,450 kcal/day</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== PAGE 4: SCHEDULE PAGE ==================== -->
+        <section id="page-schedule" class="page-view py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-xs font-black uppercase text-brand-neonCyan tracking-widest">Interactive Calendar</span>
+                    <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white">WEEKLY TIMETABLE</h1>
+                    <p class="text-gray-400 text-base">Filter by day or workout discipline and reserve your training slot instantly.</p>
+                </div>
+
+                <!-- Day Selector Tabs -->
+                <div class="flex flex-wrap justify-center gap-2">
+                    <button onclick="filterScheduleDay('all')" class="sched-tab active px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-neonLime text-black transition-all">All Days</button>
+                    <button onclick="filterScheduleDay('Mon')" class="sched-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Mon</button>
+                    <button onclick="filterScheduleDay('Tue')" class="sched-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Tue</button>
+                    <button onclick="filterScheduleDay('Wed')" class="sched-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Wed</button>
+                    <button onclick="filterScheduleDay('Thu')" class="sched-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Thu</button>
+                    <button onclick="filterScheduleDay('Fri')" class="sched-tab px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider glass-card text-gray-300 hover:text-white transition-all">Fri</button>
+                </div>
+
+                <!-- Timetable Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="schedule-timetable">
+                    <!-- Session Card 1 -->
+                    <div class="sched-card glass-card p-6 rounded-2xl flex flex-col justify-between" data-day="Mon">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-brand-neonLime/10 text-brand-neonLime text-[10px] font-black uppercase px-2.5 py-1 rounded border border-brand-neonLime/30">HIIT Zone</span>
+                                <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-clock mr-1"></i> 06:00 AM - 07:00 AM</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Metabolic Sprint Ignition</h3>
+                            <p class="text-xs text-gray-400 mb-4">Coach Marcus Vance &bull; Arena 01</p>
+                        </div>
+                        <button onclick="openBookingModal('Metabolic Sprint Ignition', 'Monday 06:00 AM')" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-brand-neonLime hover:text-black text-xs font-extrabold uppercase transition-all">
+                            Book Seat
+                        </button>
+                    </div>
+
+                    <!-- Session Card 2 -->
+                    <div class="sched-card glass-card p-6 rounded-2xl flex flex-col justify-between" data-day="Mon">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-brand-neonCyan/10 text-brand-neonCyan text-[10px] font-black uppercase px-2.5 py-1 rounded border border-brand-neonCyan/30">Strength Deck</span>
+                                <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-clock mr-1"></i> 08:00 AM - 09:15 AM</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Hypertrophy Power Lab</h3>
+                            <p class="text-xs text-gray-400 mb-4">Coach Jaxson Hayes &bull; Zone 01</p>
+                        </div>
+                        <button onclick="openBookingModal('Hypertrophy Power Lab', 'Monday 08:00 AM')" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-brand-neonCyan hover:text-black text-xs font-extrabold uppercase transition-all">
+                            Book Seat
+                        </button>
+                    </div>
+
+                    <!-- Session Card 3 -->
+                    <div class="sched-card glass-card p-6 rounded-2xl flex flex-col justify-between" data-day="Tue">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-red-500/10 text-red-400 text-[10px] font-black uppercase px-2.5 py-1 rounded border border-red-500/30">Combat Ring</span>
+                                <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-clock mr-1"></i> 05:30 PM - 06:45 PM</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Heavy Bag Syndicate</h3>
+                            <p class="text-xs text-gray-400 mb-4">Coach Elena Rostova &bull; Arena 03</p>
+                        </div>
+                        <button onclick="openBookingModal('Heavy Bag Syndicate', 'Tuesday 05:30 PM')" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-red-500 hover:text-black text-xs font-extrabold uppercase transition-all">
+                            Book Seat
+                        </button>
+                    </div>
+
+                    <!-- Session Card 4 -->
+                    <div class="sched-card glass-card p-6 rounded-2xl flex flex-col justify-between" data-day="Wed">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase px-2.5 py-1 rounded border border-purple-500/30">Recovery Studio</span>
+                                <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-clock mr-1"></i> 07:00 AM - 08:00 AM</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Kinetic Flow Mobility</h3>
+                            <p class="text-xs text-gray-400 mb-4">Coach Aria Chen &bull; Zen Room</p>
+                        </div>
+                        <button onclick="openBookingModal('Kinetic Flow Mobility', 'Wednesday 07:00 AM')" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-purple-500 hover:text-black text-xs font-extrabold uppercase transition-all">
+                            Book Seat
+                        </button>
+                    </div>
+
+                    <!-- Session Card 5 -->
+                    <div class="sched-card glass-card p-6 rounded-2xl flex flex-col justify-between" data-day="Thu">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-brand-neonLime/10 text-brand-neonLime text-[10px] font-black uppercase px-2.5 py-1 rounded border border-brand-neonLime/30">HIIT Zone</span>
+                                <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-clock mr-1"></i> 06:30 PM - 07:30 PM</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Sleds, Ski & Engine</h3>
+                            <p class="text-xs text-gray-400 mb-4">Coach Marcus Vance &bull; Arena 01</p>
+                        </div>
+                        <button onclick="openBookingModal('Sleds, Ski & Engine', 'Thursday 06:30 PM')" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-brand-neonLime hover:text-black text-xs font-extrabold uppercase transition-all">
+                            Book Seat
+                        </button>
+                    </div>
+
+                    <!-- Session Card 6 -->
+                    <div class="sched-card glass-card p-6 rounded-2xl flex flex-col justify-between" data-day="Fri">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-brand-neonCyan/10 text-brand-neonCyan text-[10px] font-black uppercase px-2.5 py-1 rounded border border-brand-neonCyan/30">Strength Deck</span>
+                                <span class="text-xs font-bold text-gray-400"><i class="fa-regular fa-clock mr-1"></i> 05:00 PM - 06:30 PM</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">Deadlift & PR Platform</h3>
+                            <p class="text-xs text-gray-400 mb-4">Coach Jaxson Hayes &bull; Zone 01</p>
+                        </div>
+                        <button onclick="openBookingModal('Deadlift & PR Platform', 'Friday 05:00 PM')" class="w-full py-2.5 rounded-xl bg-white/5 hover:bg-brand-neonCyan hover:text-black text-xs font-extrabold uppercase transition-all">
+                            Book Seat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE 5: MEMBERSHIP PAGE ==================== -->
+        <section id="page-membership" class="page-view py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-xs font-black uppercase text-brand-neonLime tracking-widest">Membership Tiers</span>
+                    <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white">CHOOSE YOUR ACCESS</h1>
+                    <p class="text-gray-400 text-base">Select the plan that matches your training frequency and recovery needs.</p>
+
+                    <!-- Billing Toggle -->
+                    <div class="pt-6 inline-flex items-center p-1.5 rounded-full glass-card border border-white/10">
+                        <button id="bill-monthly" onclick="switchBilling('monthly')" class="px-6 py-2 rounded-full text-xs font-extrabold uppercase bg-brand-neonLime text-black transition-all">Monthly</button>
+                        <button id="bill-annual" onclick="switchBilling('annual')" class="px-6 py-2 rounded-full text-xs font-extrabold uppercase text-gray-400 hover:text-white transition-all flex items-center gap-2">
+                            Annual <span class="bg-brand-neonCyan/20 text-brand-neonCyan text-[10px] px-2 py-0.5 rounded-full">Save 20%</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tiers Cards Grid -->
+                <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                    <!-- Basic -->
+                    <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-black uppercase text-gray-400 tracking-wider">Standard</span>
+                            <h3 class="text-2xl font-bold text-white mt-1">BASIC ACCESS</h3>
+                            <div class="my-6">
+                                <span class="text-5xl font-black text-white mem-price" data-m="$49" data-a="$39">$49</span>
+                                <span class="text-gray-400 text-xs font-bold">/ month</span>
+                            </div>
+                            <ul class="space-y-4 text-xs text-gray-300 border-t border-white/10 pt-6">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonLime"></i> Gym Floor & Weights Access</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonLime"></i> Locker Room & Showers</li>
+                                <li class="flex items-center gap-3 text-gray-500"><i class="fa-solid fa-xmark"></i> Group Fitness Classes</li>
+                                <li class="flex items-center gap-3 text-gray-500"><i class="fa-solid fa-xmark"></i> Recovery Lounge Spa Pass</li>
+                            </ul>
+                        </div>
+                        <button onclick="selectTier('Basic Access')" class="mt-8 w-full py-3.5 rounded-xl bg-white/10 text-white font-extrabold text-xs uppercase hover:bg-white hover:text-black transition-all">
+                            Select Plan
+                        </button>
+                    </div>
+
+                    <!-- Pro (Featured) -->
+                    <div class="glass-card p-8 rounded-3xl flex flex-col justify-between border-2 border-brand-neonLime relative shadow-neon-lime">
+                        <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-neonLime text-black font-black text-[10px] uppercase tracking-widest px-4 py-1 rounded-full">Most Popular</span>
+                        <div>
+                            <span class="text-xs font-black uppercase text-brand-neonLime tracking-wider">Full Access</span>
+                            <h3 class="text-2xl font-bold text-white mt-1">PULSE PRO</h3>
+                            <div class="my-6">
+                                <span class="text-5xl font-black text-white mem-price" data-m="$89" data-a="$69">$89</span>
+                                <span class="text-gray-400 text-xs font-bold">/ month</span>
+                            </div>
+                            <ul class="space-y-4 text-xs text-gray-300 border-t border-white/10 pt-6">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonLime"></i> Unlimited Floor & Weights Access</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonLime"></i> Unlimited Group Fitness Classes</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonLime"></i> Cold Plunge & Sauna Access</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonLime"></i> 2 Guest Passes / Month</li>
+                            </ul>
+                        </div>
+                        <button onclick="selectTier('Pulse Pro')" class="mt-8 w-full py-3.5 rounded-xl bg-brand-neonLime text-black font-extrabold text-xs uppercase hover:bg-white transition-all">
+                            Select Pro Tier
+                        </button>
+                    </div>
+
+                    <!-- VIP -->
+                    <div class="glass-card p-8 rounded-3xl flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-black uppercase text-brand-neonCyan tracking-wider">VIP Level</span>
+                            <h3 class="text-2xl font-bold text-white mt-1">ULTIMATE VIP</h3>
+                            <div class="my-6">
+                                <span class="text-5xl font-black text-white mem-price" data-m="$149" data-a="$119">$149</span>
+                                <span class="text-gray-400 text-xs font-bold">/ month</span>
+                            </div>
+                            <ul class="space-y-4 text-xs text-gray-300 border-t border-white/10 pt-6">
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonCyan"></i> All Pro Tier Benefits</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonCyan"></i> 2x Personal Coaching Sessions</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonCyan"></i> Unlimited Recovery Spa Suite</li>
+                                <li class="flex items-center gap-3"><i class="fa-solid fa-check text-brand-neonCyan"></i> Permanent Private Locker</li>
+                            </ul>
+                        </div>
+                        <button onclick="selectTier('Ultimate VIP')" class="mt-8 w-full py-3.5 rounded-xl bg-white/10 text-white font-extrabold text-xs uppercase hover:bg-brand-neonCyan hover:text-black transition-all">
+                            Select VIP Tier
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE 6: CONTACT & FREE TRIAL PAGE ==================== -->
+        <section id="page-contact" class="page-view py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <span class="text-xs font-black uppercase text-brand-neonLime tracking-widest">Get In Touch</span>
+                    <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white">CONTACT & FREE TRIAL</h1>
+                    <p class="text-gray-400 text-base">Claim your 7-day complimentary pass or send a message to our support team.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12 items-start">
+                    <!-- Form -->
+                    <div class="glass-card p-8 rounded-3xl">
+                        <h3 class="text-2xl font-bold text-white mb-6 uppercase">Claim 7-Day Free Pass</h3>
+                        <form id="contact-trial-form" onsubmit="event.preventDefault(); handleContactSubmit();" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Full Name</label>
+                                <input type="text" required placeholder="Alex Mercer" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-brand-neonLime text-sm font-bold">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Email</label>
+                                    <input type="email" required placeholder="alex@domain.com" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-brand-neonLime text-sm font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Phone</label>
+                                    <input type="tel" required placeholder="(555) 000-1234" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-brand-neonLime text-sm font-bold">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Message / Note</label>
+                                <textarea rows="3" placeholder="Tell us about your fitness targets..." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-brand-neonLime text-sm font-bold"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-4 rounded-xl bg-brand-neonLime text-black font-extrabold uppercase text-xs tracking-wider hover:bg-white transition-all shadow-neon-lime">
+                                Activate 7-Day Trial Pass
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- FAQ Accordion & Location Info -->
+                    <div class="space-y-8">
+                        <div class="glass-card p-8 rounded-3xl space-y-4">
+                            <h3 class="text-xl font-bold text-white uppercase">Location & Operating Hours</h3>
+                            <div class="space-y-3 text-xs text-gray-300">
+                                <p><i class="fa-solid fa-location-dot text-brand-neonLime mr-2"></i> 742 Performance Way, Metro Fitness District</p>
+                                <p><i class="fa-solid fa-phone text-brand-neonCyan mr-2"></i> +1 (800) 555-PULSE</p>
+                                <p><i class="fa-solid fa-clock text-brand-neonLime mr-2"></i> Open 24/7 For All Members (Staffed 6am - 10pm)</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Accordion -->
+                        <div class="glass-card p-8 rounded-3xl space-y-4">
+                            <h3 class="text-xl font-bold text-white uppercase">Frequently Asked Questions</h3>
+                            
+                            <div class="border-b border-white/10 pb-3">
+                                <h4 class="text-sm font-bold text-white">What do I need to bring for my 7-day trial?</h4>
+                                <p class="text-xs text-gray-400 mt-1">Just a photo ID, workout attire, and athletic footwear. We provide towels and locker access.</p>
+                            </div>
+                            <div class="border-b border-white/10 pb-3">
+                                <h4 class="text-sm font-bold text-white">Are group classes included in the trial?</h4>
+                                <p class="text-xs text-gray-400 mt-1">Yes! Your 7-day pass gives you full access to all group classes and gym floor zones.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Is there a long-term contract requirement?</h4>
+                                <p class="text-xs text-gray-400 mt-1">No long-term lock-ins. All monthly memberships can be paused or cancelled with 30 days notice.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black border-t border-white/10 py-12 text-gray-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <!-- Brand -->
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-brand-neonLime flex items-center justify-center text-black font-black text-xl">
+                        P
+                    </div>
+                    <span class="text-xl font-black text-white tracking-wider">PULSE<span class="text-brand-neonLime">.</span></span>
+                </div>
+
+                <!-- Footer Quick Links -->
+                <div class="flex flex-wrap gap-6 font-bold uppercase tracking-wider text-[11px]">
+                    <a href="#home" class="hover:text-brand-neonLime">Home</a>
+                    <a href="#about" class="hover:text-brand-neonLime">About</a>
+                    <a href="#classes" class="hover:text-brand-neonLime">Classes</a>
+                    <a href="#schedule" class="hover:text-brand-neonLime">Schedule</a>
+                    <a href="#membership" class="hover:text-brand-neonLime">Membership</a>
+                    <a href="#contact" class="hover:text-brand-neonLime">Contact</a>
+                </div>
+
+                <!-- Socials -->
+                <div class="flex gap-4">
+                    <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:text-brand-neonLime"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:text-brand-neonLime"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full glass-card flex items-center justify-center hover:text-brand-neonLime"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="text-center text-gray-500 border-t border-white/5 pt-6">
+                &copy; 2026 PULSE PERFORMANCE GYM. All Rights Reserved. Built for high achievers.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Global Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-card p-8 rounded-3xl max-w-md w-full relative">
+            <button onclick="closeModal('booking-modal')" class="absolute top-6 right-6 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <span class="text-xs font-black uppercase text-brand-neonLime tracking-widest">Reserve Class Seat</span>
+            <h3 id="modal-class-title" class="text-2xl font-black text-white mt-1">Class Title</h3>
+            <p id="modal-class-time" class="text-xs text-brand-neonCyan font-bold mt-1 mb-6">Time Slot</p>
+
+            <form onsubmit="event.preventDefault(); submitBooking();" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Your Full Name</label>
+                    <input type="text" required placeholder="John Doe" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Email Address</label>
+                    <input type="email" required placeholder="john@example.com" class="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs font-bold">
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-brand-neonLime text-black font-extrabold uppercase text-xs tracking-wider hover:bg-white transition-all mt-2">
+                    Confirm Seat Booking
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Trainer Bio Modal -->
+    <div id="trainer-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-card p-8 rounded-3xl max-w-md w-full relative">
+            <button onclick="closeModal('trainer-modal')" class="absolute top-6 right-6 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 id="trainer-modal-name" class="text-2xl font-black text-white">Trainer Name</h3>
+            <span id="trainer-modal-role" class="text-xs font-bold text-brand-neonLime uppercase">Role</span>
+            <p id="trainer-modal-bio" class="text-xs text-gray-300 leading-relaxed mt-4">Trainer Bio</p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden glass-card border border-brand-neonLime text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3">
+        <i class="fa-solid fa-circle-check text-brand-neonLime text-lg"></i>
+        <span id="toast-message" class="text-xs font-bold">Action completed!</span>
+    </div>
+
+    <!-- JavaScript Application Router & Logic -->
+    <script>
+        // Multi-Page Hash Router Logic
+        const validPages = ['home', 'about', 'classes', 'schedule', 'membership', 'contact'];
+
+        function navigateToPage(pageId) {
+            if (!validPages.includes(pageId)) {
+                pageId = 'home';
+            }
+
+            // Hide all pages
+            document.querySelectorAll('.page-view').forEach(page => {
+                page.classList.remove('active-page');
+            });
+
+            // Show selected target page
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) {
+                target.classList.add('active-page');
+            }
+
+            // Update Header Nav Links Active State
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.dataset.page === pageId) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Scroll top smooth
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle URL Hash change
+        function handleRouteHash() {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            navigateToPage(hash);
+        }
+
+        window.addEventListener('hashchange', handleRouteHash);
+        window.addEventListener('DOMContentLoaded', handleRouteHash);
+
+        // Mobile Menu Drawer Controls
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Classes Filter
+        function filterClassesCatalog(type) {
+            document.querySelectorAll('.class-cat-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-neonLime', 'text-black');
+                btn.classList.add('text-gray-300');
+            });
+            event.currentTarget.classList.add('bg-brand-neonLime', 'text-black');
+            event.currentTarget.classList.remove('text-gray-300');
+
+            document.querySelectorAll('.catalog-card').forEach(card => {
+                if (type === 'all' || card.dataset.type === type) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Schedule Filter
+        function filterScheduleDay(day) {
+            document.querySelectorAll('.sched-tab').forEach(btn => {
+                btn.classList.remove('bg-brand-neonLime', 'text-black');
+                btn.classList.add('text-gray-300');
+            });
+            event.currentTarget.classList.add('bg-brand-neonLime', 'text-black');
+            event.currentTarget.classList.remove('text-gray-300');
+
+            document.querySelectorAll('.sched-card').forEach(card => {
+                if (day === 'all' || card.dataset.day === day) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // BMI & Caloric Calculation
+        function computeMetrics() {
+            const h = parseFloat(document.getElementById('calc-height').value) / 100;
+            const w = parseFloat(document.getElementById('calc-weight').value);
+
+            if (h > 0 && w > 0) {
+                const bmi = (w / (h * h)).toFixed(1);
+                let cat = 'Normal Weight';
+                if (bmi < 18.5) cat = 'Underweight';
+                else if (bmi >= 25 && bmi < 29.9) cat = 'Overweight';
+                else if (bmi >= 30) cat = 'Obese Range';
+
+                const cals = Math.round(w * 24 * 1.35);
+
+                document.getElementById('calc-placeholder').classList.add('hidden');
+                document.getElementById('calc-results').classList.remove('hidden');
+
+                document.getElementById('out-bmi').innerText = bmi;
+                document.getElementById('out-cat').innerText = cat;
+                document.getElementById('out-cals').innerText = `${cals.toLocaleString()} kcal/day`;
+            }
+        }
+
+        // Membership Billing Toggle
+        function switchBilling(type) {
+            const monthlyBtn = document.getElementById('bill-monthly');
+            const annualBtn = document.getElementById('bill-annual');
+            const prices = document.querySelectorAll('.mem-price');
+
+            if (type === 'annual') {
+                annualBtn.classList.add('bg-brand-neonLime', 'text-black');
+                annualBtn.classList.remove('text-gray-400');
+                monthlyBtn.classList.remove('bg-brand-neonLime', 'text-black');
+                monthlyBtn.classList.add('text-gray-400');
+
+                prices.forEach(p => p.innerText = p.dataset.a);
+            } else {
+                monthlyBtn.classList.add('bg-brand-neonLime', 'text-black');
+                monthlyBtn.classList.remove('text-gray-400');
+                annualBtn.classList.remove('bg-brand-neonLime', 'text-black');
+                annualBtn.classList.add('text-gray-400');
+
+                prices.forEach(p => p.innerText = p.dataset.m);
+            }
+        }
+
+        // Modals Logic
+        function openBookingModal(title, time) {
+            document.getElementById('modal-class-title').innerText = title;
+            document.getElementById('modal-class-time').innerText = time;
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        function openTrainerModal(name, role, bio) {
+            document.getElementById('trainer-modal-name').innerText = name;
+            document.getElementById('trainer-modal-role').innerText = role;
+            document.getElementById('trainer-modal-bio').innerText = bio;
+            document.getElementById('trainer-modal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function selectTier(tierName) {
+            showToast(`Selected ${tierName}! Redirecting to pass activation...`);
+            setTimeout(() => {
+                window.location.hash = '#contact';
+            }, 1000);
+        }
+
+        function submitBooking() {
+            closeModal('booking-modal');
+            showToast('Class reservation confirmed!');
+        }
+
+        function handleContactSubmit() {
+            showToast('7-Day Pass activated! Check your inbox.');
+            document.getElementById('contact-trial-form').reset();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
