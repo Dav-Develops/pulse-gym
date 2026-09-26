@@ -1,6 +1,7 @@
 # PULSE PERFORMANCE - Elite Multi-Page Gym Web App
 
 A high-performance modern React + Vite web application converted from the multi-page single-file architecture of `pulse_performance_multi_page_gym.html`.
+<img width="1917" height="926" alt="image" src="https://github.com/user-attachments/assets/407c148b-b314-4784-86df-1c97d1f492c2" />
 
 ## Features
 
