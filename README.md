@@ -48,7 +48,7 @@ npm run dev
 npm run build
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Client: [http://localhost:5173](http://localhost:5173) in the browser.
 
 ### 2. Backend Server (Optional)
 
@@ -61,3 +61,6 @@ npm run dev
 ```
 
 Server runs on [http://localhost:5000](http://localhost:5000) (proxied via Vite on `/api`).
+
+**License**
+© 2026 Dav-Develops. Licensed under CC BY‑NC‑ND 4.0. https://creativecommons.org/licenses/by-nc-nd/4.0
