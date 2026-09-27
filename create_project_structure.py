@@ -29,8 +29,9 @@ if __name__ == "__main__":
         "client/src/pages/Contact",
         "client/src/pages/Home",
         "client/src/pages/Projects",
-        "client/src/pages/Skills",
-        "client/src/pages/Technologies",
+        "client/src/pages/Classes",
+        "client/src/pages/Schedule",
+        "client/src/pages/Membership",
         "client/src/redux/slices",
         "client/src/routes",
         "client/src/services",
@@ -220,18 +221,7 @@ export default Home;
 
 export default Projects;
 """,
-        "client/src/pages/Skills/Skills.jsx": """function Skills() {
-  return <div>Skills</div>;
-}
 
-export default Skills;
-""",
-        "client/src/pages/Technologies/Technologies.jsx": """function Technologies() {
-  return <div>Technologies</div>;
-}
-
-export default Technologies;
-""",
         "client/src/routes/AppRoutes.jsx": """import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home/Home';
 import About from '../pages/About/About';

@@ -8,9 +8,6 @@ import Membership from '../pages/Membership/Membership';
 import Contact from '../pages/Contact/Contact';
 import Login from '../pages/Authentication/Login';
 import Register from '../pages/Authentication/Register';
-import Projects from '../pages/Projects/Projects';
-import Skills from '../pages/Skills/Skills';
-import Technologies from '../pages/Technologies/Technologies';
 import PublicRoute from './PublicRoute';
 
 function ScrollToTop() {
@@ -50,10 +47,6 @@ function AppRoutes() {
             </PublicRoute>
           }
         />
-        {/* Legacy / Alias Routes */}
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/skills" element={<Skills />} />
-        <Route path="/technologies" element={<Technologies />} />
         {/* Catch-all redirect */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
